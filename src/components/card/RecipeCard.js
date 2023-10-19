@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -26,7 +27,9 @@ import { Link } from "react-router-dom";
 //         </div>
 //     )
 // }
-const RecipeCard = ({ id,name, image, owner, favorites ,reload}) => {
+const RecipeCard = ({ item, image, reload }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
 
   return (
     <div className="product-item">
@@ -36,7 +39,7 @@ const RecipeCard = ({ id,name, image, owner, favorites ,reload}) => {
             style={{ height: "350px", objectFit: "cover" }}
             className="img-fluid w-100"
             src={image}
-            alt={name}
+            alt={item?.name}
           />
         </Link>
       </div>
@@ -46,19 +49,19 @@ const RecipeCard = ({ id,name, image, owner, favorites ,reload}) => {
           className="d-block h5 mb-1"
           to="/recipe/id"
         >
-          {name}
+          {item?.name}
         </Link>
         <span
           style={{ fontSize: "15px", fontStyle: "italic" }}
           className="text-secondary me-2 d-block"
         >
-          by {owner}
+          by {item?.owner}
         </span>
-        
+
         <span className="text-secondary me-1">
-            {favorites}
-            <i style={{ color: "red" }} className="fa-solid fa-heart"></i>
-          </span>
+          {item?.favorites_size}
+          <i style={{ color: "red" }} className="fa-solid fa-heart"></i>
+        </span>
       </div>
       <div className="d-flex border-top">
         <small className="w-50 text-center border-end py-2">
@@ -74,12 +77,23 @@ const RecipeCard = ({ id,name, image, owner, favorites ,reload}) => {
           <div
             style={{ textDecoration: "none", cursor: "pointer" }}
             className="text-body"
-            onClick={()=>{
-
+            onClick={async () => {
+              await axios.post(
+                `/user/c_m/${item._id}`,
+                {},
+                {
+                  headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`,
+                  },
+                }
+              );
+              reload();
             }}
-          
           >
-            <i className="fa fa-heart text-primary me-2"></i>Favorites 
+            <i className="fa fa-heart text-primary me-2"></i>
+            {item?.favorites?.find((item) => item === user._id)
+              ? "Unfavorite"
+              : "Favorite"}
           </div>
         </small>
       </div>

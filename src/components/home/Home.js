@@ -130,7 +130,7 @@ const Home = () => {
             <div class="tab-pane fade show p-0 active">
               <div class="row g-4">
                 {dataFavorite.map((item) => {
-                  const img = item.tag.find((el) => el.k === "image");
+                  const img = item.tags?.find((el) => el.k === "image");
                   return (
                     <div
                       class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
@@ -183,7 +183,7 @@ const Home = () => {
             <div class="tab-pane fade show p-0 active">
               <div class="row g-4">
                 {dataNew.map((item) => {
-                  const img = item.tag.find((el) => el.k === "image");
+                  const img = item.tags?.find((el) => el.k === "image");
                   return (
                     <div
                       class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"

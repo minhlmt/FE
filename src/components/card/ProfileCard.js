@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ProfileCard = () => {
+const ProfileCard = ({name,image,recipe,follower}) => {
     return (
         <section style={{ backgroundColor: "#9de2ff", height: "250px", borderRadius: "30px" }}>
             <div class="container custom_py-5 h-100">
@@ -11,24 +11,24 @@ const ProfileCard = () => {
                             <div style={{ height: "150px" }} class="card-body p-4">
                                 <div class="d-flex text-black">
                                     <Link to='/minhquang/profile' class="flex-shrink-0">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                                        <img src={image}
                                             alt="Generic placeholder image" class="img-fluid"
                                             style={{ width: "100px", height: "80px", objectFit: "cover" }} />
                                     </Link>
                                     <div class="flex-grow-1 ms-3">
                                         <Link style={{textDecoration:"none",color:"rgba(0,0,0,0.6)"}} to='/minhquang/profile'>
-                                            <h5 class="mb-1">Danny McLoan</h5>
+                                            <h5 class="mb-1">{name}</h5>
                                         </Link>
-                                        <p class="mb-2 pb-1" style={{ color: "#2b2a2a" }}>Senior Journalist</p>
+                                        <p class="mb-2 pb-1" style={{ color: "#2b2a2a" }}>Chief</p>
                                         <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
                                             style={{ backgroundColor: "#efefef" }}>
                                             <div>
-                                                <p class="small text-muted mb-1">Articles</p>
-                                                <p class="mb-0">41</p>
+                                                <p class="small text-muted mb-1">Recipes</p>
+                                                <p class="mb-0">{recipe}</p>
                                             </div>
                                             <div class="px-3">
                                                 <p class="small text-muted mb-1">Followers</p>
-                                                <p class="mb-0">976</p>
+                                                <p class="mb-0">{follower}</p>
                                             </div>
                                         </div>
                                         <div class="d-flex pt-1">

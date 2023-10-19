@@ -9,23 +9,34 @@ import axios from 'axios'
 const Home = () => {
   const [dataFavorite, setDataFavorite]=useState([])
   const [dataNew, setDataNew]=useState([])
+  const [dataChief,setDataChief]=useState([])
   const getRecipeFavorite = async()=>{
     const res = await axios.get('/recipe/recipe_favorite',
     { params : { page : 1, limit: 4 }});
-    if (res.success){
-      setDataFavorite(res.data)
+    if (res.data.success){
+      setDataFavorite(res.data.data)
     }
   }
   const getRecipeNew = async()=>{
     const res = await axios.get('/recipe/recipe_new',
     { params : { page : 1 ,limit: 4}});
-    if (res.success){
-      setDataNew(res.data)
+    if (res.data.success){
+      setDataNew(res.data.data)
     }
   }
+  const getTopChief = async()=>{
+    const res = await axios.get('/user/top_chief',
+    { params : { page : 1 ,limit: 9}});
+    console.log("res" ,res)
+    if (res.data.success){
+      setDataChief(res.data.data)
+    }
+  }
+
   useEffect(()=>{
-    getRecipeFavorite()
-    getRecipeNew()
+    getTopChief()
+    // getRecipeFavorite()
+    // getRecipeNew()
   },[])
   return (
     <>
@@ -81,13 +92,21 @@ const Home = () => {
           <div class="tab-content">
             <div class="tab-pane fade show p-0 active">
               <div class="row g-4">
-               {dataFavorite.map(item=>  <RecipeCard />)}
+               {dataFavorite.map(item=>  {
+                const img=item.tag.find(el=>el.k==='image');
+                return  <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                  <RecipeCard id={item._id} name={item.name} 
+                      owner={item.owner} 
+                      favorites={item.favorites_size} 
+                      image={img?.v||'https://cdnimg.vietnamplus.vn/t620/uploaded/ngtnnn/2022_07_27/2707banhxeo.jpg'} 
+                      reload={getRecipeFavorite}/>
+                  </div>} )}
                 <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                   <RecipeCard name="hehe" owner="la tao" favorites={4000} image='https://cdnimg.vietnamplus.vn/t620/uploaded/ngtnnn/2022_07_27/2707banhxeo.jpg' />
                 </div>
                 
                 <div class="col-12 text-center">
-                  <Link class="btn btn-primary rounded-pill py-3 px-5" to="/search">Hiển thị thêm</Link>
+                  <Link class="btn btn-primary rounded-pill py-3 px-5" to="/recipe/search?type=favorite">Hiển thị thêm</Link>
                 </div>
               </div>
             </div>
@@ -106,32 +125,17 @@ const Home = () => {
           <div class="tab-content">
             <div class="tab-pane fade show p-0 active">
               <div class="row g-4">
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
+                {dataNew.map(item=>  {
+                  const img=item.tag.find(el=>el.k==='image');
+                  return  <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <RecipeCard name={item.name} owner={item.owner} favorites={item.favorites_size} image={img.v}/>
+                           </div>})}
+                  <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                  <RecipeCard name="hehe" owner="la tao" favorites={4000} image='https://cdnimg.vietnamplus.vn/t620/uploaded/ngtnnn/2022_07_27/2707banhxeo.jpg' />
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                  <RecipeCard />
-                </div>
+               
                 <div class="col-12 text-center">
-                  <Link class="btn btn-primary rounded-pill py-3 px-5" to="/search">Hiển thị thêm</Link>
+                  <Link class="btn btn-primary rounded-pill py-3 px-5" to="/recipe/search?type=new">Hiển thị thêm</Link>
                 </div>
               </div>
             </div>
@@ -158,18 +162,18 @@ const Home = () => {
               disableOnInteraction: false,
             }}
           >
-            <SwiperSlide>
-              <ProfileCard />
+            {dataChief.map(item=>{
+              
+              return <SwiperSlide>
+              <ProfileCard name={item.name}
+               recipe={item.recipe_size} 
+               follower={item.followers_size}
+                image={item.tags.find(el=>el.k==='image')?.v 
+              ||'https://www.cet.edu.vn/wp-content/uploads/2018/04/nghe-dau-bep-cet.jpg'}/>
             </SwiperSlide>
-            <SwiperSlide>
-              <ProfileCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProfileCard />
-            </SwiperSlide>
-            <SwiperSlide>
-              <ProfileCard />
-            </SwiperSlide>
+            }
+            )}
+          
           </Swiper>
         </div>
       </div>

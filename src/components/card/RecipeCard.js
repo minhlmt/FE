@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 //         </div>
 //     )
 // }
-const RecipeCard = ({ name, image, owner, favorites }) => {
+const RecipeCard = ({ id,name, image, owner, favorites ,reload}) => {
 
   return (
     <div className="product-item">
@@ -74,6 +74,9 @@ const RecipeCard = ({ name, image, owner, favorites }) => {
           <div
             style={{ textDecoration: "none", cursor: "pointer" }}
             className="text-body"
+            onClick={()=>{
+
+            }}
           
           >
             <i className="fa fa-heart text-primary me-2"></i>Favorites 

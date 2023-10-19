@@ -39,8 +39,8 @@ const Home = () => {
 
   useEffect(() => {
     getTopChief();
-    // getRecipeFavorite()
-    // getRecipeNew()
+    getRecipeFavorite()
+    getRecipeNew()
   }, []);
   return (
     <>
@@ -147,16 +147,7 @@ const Home = () => {
                     </div>
                   );
                 })}
-                <div
-                  class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  <RecipeCard
-                    item={{ name: "hehe", owner: "haha", _id: "2323" }}
-                    image="https://cdnimg.vietnamplus.vn/t620/uploaded/ngtnnn/2022_07_27/2707banhxeo.jpg"
-                  />
-                </div>
-
+             
                 <div class="col-12 text-center">
                   <Link
                     class="btn btn-primary rounded-pill py-3 px-5"
@@ -209,17 +200,7 @@ const Home = () => {
                     </div>
                   );
                 })}
-                <div
-                  class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  <RecipeCard
-                    name="hehe"
-                    owner="la tao"
-                    favorites={4000}
-                    image="https://cdnimg.vietnamplus.vn/t620/uploaded/ngtnnn/2022_07_27/2707banhxeo.jpg"
-                  />
-                </div>
+              
 
                 <div class="col-12 text-center">
                   <Link

@@ -55,7 +55,7 @@ const RecipeCard = ({ item, image, reload }) => {
           style={{ fontSize: "15px", fontStyle: "italic" }}
           className="text-secondary me-2 d-block"
         >
-          by {item?.owner}
+          by {item?.users?.[0].name}
         </span>
 
         <span className="text-secondary me-1">

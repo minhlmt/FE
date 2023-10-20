@@ -11,6 +11,9 @@ const Home = () => {
   const [dataNew, setDataNew] = useState([]);
   const [dataChief, setDataChief] = useState([]);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
   const getRecipeFavorite = async () => {
     const res = await axios.get("/recipe/recipe_favorite", {
       params: { page: 1, limit: 4 },
@@ -245,6 +248,9 @@ const Home = () => {
             }}
           >
             {dataChief.map((item) => {
+if (item._id === user._id){
+  return
+}
               return (
                 <SwiperSlide>
                   <ProfileCard

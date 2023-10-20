@@ -336,7 +336,7 @@ const Profile = () => {
                                 </div> :
                                     type === "love" ? <div className='row'>
                                         {user?.favoriteRecipes?.map(item=>{
-                                            const img = item.tag.find((el) => el.k === "image");
+                                            const img = item.tags?.find((el) => el.k === "image");
                                             return  <RecipeCard item={item} image={img?.v} reload={()=> setReload(pre => !pre)}/>
                                            
                                         })}

@@ -15,7 +15,7 @@ const Searching = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [urlApi, setUrlApi] = useState("");
-
+const[size,setsize]=useState(0);
   const handlePageChange = (page) => {
     setCurrentPage(page);
     getRecipe(undefined, page);
@@ -23,10 +23,11 @@ const Searching = () => {
 
   const getRecipe = async (url, page) => {
     const res = await axios.get(url || urlApi, {
-      params: { page, limit: 10 },
+      params: { page, limit: 5 },
     });
-    if (res.success) {
-      setRecipes(res.data);
+    if (res.data.success) {
+      setRecipes(res.data.data);
+      setsize(res.data.size)
     }
   };
 
@@ -83,6 +84,7 @@ const Searching = () => {
     setNotFoundMessage("");
   };
 
+ 
   return (
     <div className="searching">
       <div className="s009">
@@ -188,6 +190,7 @@ const Searching = () => {
                   key={recipe._id}
                 >
                   <RecipeCard
+                  item={recipe}
                     name={recipe.name}
                     image={recipe.tags.find((tag) => tag.k === "image").v}
                     owner={recipe.owner}
@@ -202,7 +205,7 @@ const Searching = () => {
               >
                 <Pagination
                   currentPage={currentPage}
-                  totalPages={Math.ceil(recipes.size / 10)}
+                  totalPages={Math.ceil(size / 5)}
                   onPageChange={handlePageChange}
                 />
               </div>
